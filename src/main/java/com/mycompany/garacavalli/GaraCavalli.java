@@ -1,80 +1,67 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
-package com.mycompany.garacavalli;
-
-/**
- *
- * @author Utente
- */
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
-class Cavallo extends Thread {
-    private final String nome;
-    private final int lunghezzaPercorso;
-    private int metriPercorsi = 0;
-    private final Random random = new Random();
+public class GaraCavalliSemplice {
 
-    public Cavallo(String nome, int lunghezzaPercorso) {
-        this.nome = nome;
-        this.lunghezzaPercorso = lunghezzaPercorso;
-    }
+    // Classe per rappresentare ogni cavallo come un thread
+    static class Cavallo extends Thread {
+        private final String nome;
+        private final int lunghezzaGara;
+        private int distanzaPercorsa = 0;
 
-    @Override
-    public void run() {
-        while (metriPercorsi < lunghezzaPercorso) {
-            metriPercorsi += random.nextInt(5) + 1; // Passo casuale da 1 a 5 metri
-            if (metriPercorsi > lunghezzaPercorso) {
-                metriPercorsi = lunghezzaPercorso; // Non superare la lunghezza del percorso
-            }
-            System.out.printf("%s ha percorso %d metri.%n", nome, metriPercorsi);
-            try {
-                Thread.sleep(random.nextInt(1000) + 500); // Pausa tra 500 e 1500 ms
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+        public Cavallo(String nome, int lunghezzaGara) {
+            this.nome = nome;
+            this.lunghezzaGara = lunghezzaGara;
         }
-        System.out.printf("%s ha completato la gara!%n", nome);
-    }
-}
 
-public class GaraCavalli {
+        @Override
+        public void run() {
+            while (distanzaPercorsa < lunghezzaGara) {
+                distanzaPercorsa += 10; // Ogni cavallo avanza di 10 metri
+                System.out.println(nome + " ha percorso " + distanzaPercorsa + " metri");
+
+                // Pausa per rendere la gara visibile
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(nome + " ha terminato la gara!");
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Lunghezza del percorso in metri: ");
-        int lunghezzaPercorso = scanner.nextInt();
-
-        System.out.print("Numero di cavalli: ");
-        int numCavalli = scanner.nextInt();
+        // Richiede la lunghezza della gara
+        System.out.print("Inserisci la lunghezza del percorso di gara (in metri): ");
+        int lunghezzaGara = scanner.nextInt();
         scanner.nextLine(); // Consuma il newline rimasto
 
-        List<Cavallo> cavalli = new ArrayList<>();
+        // Richiede i nomi dei cavalli
+        System.out.print("Inserisci i nomi dei cavalli separati da virgola: ");
+        String[] nomiCavalli = scanner.nextLine().split(",");
 
-        // Creazione e avvio dei cavalli
-        for (int i = 0; i < numCavalli; i++) {
-            System.out.print("Nome del cavallo: ");
-            String nome = scanner.nextLine();
-            cavalli.add(new Cavallo(nome, lunghezzaPercorso));
+        // Crea e avvia i thread per ogni cavallo
+        List<Cavallo> cavalli = new ArrayList<>();
+        for (String nome : nomiCavalli) {
+            Cavallo cavallo = new Cavallo(nome.trim(), lunghezzaGara);
+            cavalli.add(cavallo);
+            cavallo.start();
         }
 
-        // Avvio dei thread
-        cavalli.forEach(Thread::start);
-
-        // Attesa del completamento di tutti i cavalli
+        // Attende che tutti i cavalli terminino la gara
         for (Cavallo cavallo : cavalli) {
             try {
                 cavallo.join();
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                e.printStackTrace();
             }
         }
 
-        System.out.println("La gara è finita!");
+        System.out.println("La gara è terminata!");
         scanner.close();
     }
 }
