@@ -18,10 +18,10 @@ public class GaraCavalli {
         @Override
         public void run() {
             while (distanzaPercorsa < lunghezzaGara) {
-                distanzaPercorsa += 10; // Ogni cavallo avanza di 10 metri
+                distanzaPercorsa += 10; 
                 System.out.println(nome + " ha percorso " + distanzaPercorsa + " metri");
 
-                // Pausa per rendere la gara visibile
+                
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
