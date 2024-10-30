@@ -1,4 +1,8 @@
-static class Cavallo extends Thread {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+pubblic class Cavallo extends Thread {
         private final String nome;
         private final int lunghezzaGara;
         private int distanzaPercorsa = 0;
