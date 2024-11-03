@@ -16,7 +16,7 @@ public class GaraCavalli {
         String[] nomiCavalli = scanner.nextLine().split(",");
 
        
-        ArrayList<Cavallo> cavalli = new ArrayList<Cavallo>();
+        ArrayList<Cavallo> cavalli = new ArrayList<>();
         for (String nome : nomiCavalli) {
             Cavallo cavallo = new Cavallo(nome.trim(), lunghezzaGara);
             cavalli.add(cavallo);
