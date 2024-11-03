@@ -1,8 +1,16 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.garacavalli;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class GaraCavalli {
+    
  public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -16,7 +24,7 @@ public class GaraCavalli {
         String[] nomiCavalli = scanner.nextLine().split(",");
 
        
-        ArrayList<Cavallo> cavalli = new ArrayList<>();
+        ArrayList<Cavallo> cavalli = new ArrayList<Cavallo>();
         for (String nome : nomiCavalli) {
             Cavallo cavallo = new Cavallo(nome.trim(), lunghezzaGara);
             cavalli.add(cavallo);
